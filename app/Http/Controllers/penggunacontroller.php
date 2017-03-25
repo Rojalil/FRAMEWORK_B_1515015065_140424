@@ -12,28 +12,42 @@ class penggunacontroller extends Controller
 {
     public function awal()
     {
-    	return "Hello dari penggunacontroller";
+    	return view('pengguna.awal',['data'=>pengguna::all()]);
     }
     public function tambah()
     {
-    	return $this->simpan();
+    	return view('pengguna.tambah');
     }
-    public function kurang()
+    public function simpan(Request $input)
     {
-    	return $this->hapus();
+    	$pengguna = new pengguna;
+    	$pengguna->username = $input->username;
+    	$pengguna->password = $input->password;
+    	$informasi = $pengguna->save() ? 'berhasil simpan data' : 'gagal simpan data';
+        return redirect('pengguna')->with(['informasi'=>$informasi]);
     }
-    public function simpan()
+    public function edit($id)
     {
-    	$pengguna = new pengguna();
-    	$pengguna->username = 'Rojalil';
-    	$pengguna->password = 'jalil';
-    	$pengguna->save();
-    	return "data dengan username {$pengguna->username} telah disimpan";
+        $pengguna = pengguna::find($id);
+        return view('pengguna.edit')->with(array('pengguna'=>$pengguna));
     }
-    public function hapus()
+    public function lihat($id)
     {
-    	$pengguna = new pengguna();
-    	$pengguna = pengguna::where('username','jon doe');
-    	$pengguna->delete();
+        $pengguna = pengguna::find($id);
+        return view('pengguna.lihat')->with(array('pengguna'=>$pengguna));
     }
+   public function update($id,Request $input)
+   {
+    $pengguna = pengguna::find($id);
+    $pengguna->username = $input->username;
+    $pengguna->password = $input->password;
+    $informasi = $pengguna->save() ? 'berhasil update data' : 'gagal update data';
+    return redirect('pengguna')->with(['informasi'=>$informasi]);
+   }
+   public function hapus($id)
+   {
+    $pengguna = pengguna::find($id);
+    $informasi = $pengguna->delete() ? 'berhasil hapus data' : 'gagal hapus data';
+    return redirect('pengguna')->with(['informasi'=>$informasi]);
+   }
 }
