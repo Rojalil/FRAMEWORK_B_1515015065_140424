@@ -28,4 +28,16 @@ class mahasiswacontroller extends Controller
     	$mahasiswa->save();
     	return "data dengan nama {$mahasiswa->nama} telah disimpan";
     }
+    public function mahasiswa()
+    {
+        $mahasiswa = mahasiswa::all();
+        //dd($mahasiswa);
+        foreach ($mahasiswa as $mhs) {
+            # code...
+        echo "Nama : ".$mhs->nama;
+        echo "<br>";
+        echo "Pengguna_id : ".$mhs->pengguna->username;
+        echo "<br>";
+    }
+    }
 }
