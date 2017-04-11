@@ -7,7 +7,8 @@ use Illuminate\Database\Eloquent\Model;
 class mahasiswa extends Model
 {
     protected $table = 'mahasiswa';
-    protected $fillable = ['nim','nama','alamat','pengguna_id'];
+    //protected $fillable = ['nim','nama','alamat','pengguna_id'];
+    protected $guarded = ['id'];
 
     public function pengguna() //membuat fungsi dengan nama pengguna
     {
@@ -20,5 +21,19 @@ class mahasiswa extends Model
     	return $this->hasMany(jadwal_matakuliah::class);
         //sintaks ini menghubungkan antara model mahasiswa dengan model jadwal_matakuliah,artinya kita bisa mengakses model jadwal_matakuliah melalui model mahasiswa.sintaks hasmany menandakan bahwa relasinya adalah one to many.
     }
+
+    public function getusernameAttribute()
+    {
+        return $this->pengguna->username;
+    }
+    
+    public function listmahasiswadannim()
+    {
+        $out = [];
+        foreach ($this->all() as $mhs)
+        {
+            $out[$mhs->id] = "{$mhs->nama} ({$mhs->nim})";
+        }
+        return $out;
     }
 }

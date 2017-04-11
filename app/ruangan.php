@@ -8,7 +8,8 @@ class ruangan extends Model
 {
     //
     protected $table = 'ruangan';
-    protected $fillable = ['tittle'];
+    //protected $fillable = ['tittle'];
+    protected $guarded = ['id'];
 
     public function jadwal_matakuliah() //membuat fungsi dengan nama jadwal_matakuliah
     {

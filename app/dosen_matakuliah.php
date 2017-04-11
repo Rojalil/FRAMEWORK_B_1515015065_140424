@@ -8,7 +8,8 @@ class dosen_matakuliah extends Model
 {
     //
     protected $table = 'dosen_matakuliah';
-    protected $fillable = ['dosen_id','matakuliah_id'];
+    //protected $fillable = ['dosen_id','matakuliah_id'];
+    protected $guarded = ['id'];
 
     public function dosen() //membuat fungsi dengan nama dosen
     {
@@ -27,5 +28,15 @@ class dosen_matakuliah extends Model
     	return $this->hasMany(jadwal_matakuliah::class);
         //sintaks ini fungsinya untuk menyatakan relasi dari model dosen_matakuliah dan model jadwal_matakuliah. sehingga kita bisa mngakses model jadwal_matakuliah melalui model dosen, begitu pula sebaliknya.
         //sintaks hasmany menyatakan hubungan relasiny adalah one to many.
+    }
+
+    public function listdosenmatakuliah()
+    {
+        $out = [];
+        foreach ($this->all() as $dsnmtk)
+        {
+            $out[$dsnmtk->id] = "{$dsnmtk->dosen->nama} (matakuliah {$dsnmtk->matakuliah->title})";
+        }
+        return $out;
     }
 }

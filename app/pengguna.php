@@ -8,7 +8,8 @@ class pengguna extends Model
 {
     //
     protected $table = 'pengguna';
-    protected $fillable = ['username','password'];
+    //protected $fillable = ['username','password'];
+    protected $guarded = ['id'];
     
     public function mahasiswa() // membuat fungsi dengan nama mahasiswa
     {
@@ -20,9 +21,8 @@ class pengguna extends Model
     	return $this->hasOne(dosen::class);
     	//sintaks ini menghubungkan antara model dosen dengan model pengguna, yang artinya kita bisa mengakses isi dari model dosen melalui model pengguna. sintaks hasOne sendiri menandakan hubungan relasinya adalah one to one
     }
-    public function peran() //membuat fungsi dengan nama peran
+    public function peran()
+    {
     	return $this->belongsToMany(peran::class);
-    	//sintaks ini menghubungkan antara model pengguna dengan model peran, jadi kita bisa mengakses isi model peran melalui model pengguna. sintaks belongsToMany sendiri menandakan hubungan relasinya adalah many to many
     }
-    
 }
